@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn PDF</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  </head>
+
+  <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+    <div id="app" class="w-full max-w-2xl p-8 bg-gray-800 rounded-lg shadow-md">
+      <h1 class="text-2xl font-bold mb-6">Maling Konten PDF</h1>
+      <form @submit.prevent="parsePDF">
+        <div class="mb-6">
+          <label class="block text-sm font-medium mb-2" for="pdf">Pilih PDF</label>
+          <div class="flex items-center">
+            <input @change="onFileChange" type="file" id="pdf" accept="application/pdf"
+              class="bg-gray-700 text-white p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1">
+          </div>
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm font-medium mb-2" for="rule">Aturan</label>
+          <input v-model="rule" type="text" id="rule" placeholder="Batas Akhir Bayar : {value}"
+            class="bg-gray-700 text-white p-3 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-5 rounded-md w-full">
+          Lacak...
+        </button>
+      </form>
+
+      <div v-if="result" class="mt-8">
+        <h2 class="text-xl font-bold mb-4">Panik kah abangku? Nih output nya :</h2>
+        <p>{{ result }}</p>
+        <button @click="showFullText = true"
+          class="mt-4 bg-blue-600 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-md">
+          Lihat Lengkap
+        </button>
+      </div>
+
+      <div v-if="showFullText" class="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center">
+        <div class="bg-gray-800 text-white p-6 rounded-lg shadow-lg w-11/12 max-w-3xl h-3/4 overflow-y-auto">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold">Versi Full nya</h2>
+            <button @click="showFullText = false" class="text-2xl font-bold">&times;</button>
+          </div>
+          <pre class="whitespace-pre-wrap">{{ parsedText }}</pre>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+
+</html>
